@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ba886b0558d54d16803ad0879a3876aa" Name="Diagram1">
+        <EntityTypeShape EntityType="TD_SampleDBModel.MappingTaskList" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TD_SampleDBModel.MASTERUSER" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TD_SampleDBModel.ToDoList" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <AssociationConnector Association="TD_SampleDBModel.FK__MappingTa__Mappe__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="TD_SampleDBModel.FK__MappingTa__Mappe__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="TD_SampleDBModel.FK__ToDoList__Mapped__267ABA7A" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

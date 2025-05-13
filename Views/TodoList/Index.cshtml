@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Include Font Awesome CSS -->
+    <style>
+        /* Add a light blue background color to the container */
+        .container-blue {
+            background-color: lightblue;
+            padding: 20px; /* Add padding for spacing */
+        }
+        /* Style for the update and delete icons */
+        .list-item-icons {
+            float: right;
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Hi @Session["username"],</h3>
+    <h5>Here is your tasks...</h5><br/>
+    <div class="container container-blue">
+        <div class="row">
+            <!-- Left List -->
+            <div class="col-md-4">
+                <!-- Adjust the width for List1 -->
+                <h3>Task Subject</h3>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="taskSub" placeholder="Create Task Subject">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" id="btnAddTaskSub" onclick="AddSubject()" type="button">Create</button>
+                    </div>
+                </div>
+                <ul class="list-group" id="tsubject">
+                </ul>
+            </div>
+
+            <!-- Vertical Line -->
+            <div class="vertical-line"></div>
+
+            <!-- Right List -->
+            <div class="col-md-8">
+                <!-- Adjust the width for List2 -->
+                <h3 id="taskname"></h3>
+                <div class="input-group mb-3" id="input-task" style="display:none">
+                    <input type="text" class="form-control" id="task-name" placeholder="Add item">'
+                    <div class="input-group-append" id="task-create">
+
+                    </div>
+
+                </div>
+                <ul class="list-group" id="task-list">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Your Task</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="updateInput">Update</label>
+                        <input type="text" class="form-control" id="updateTask">
+                    </div>
+                   
+                </div>
+                
+
+                <!-- Modal footer -->
+                <div class="modal-footer" id="updateButton" >
+                    <button type="button" class="btn btn-sm btn-secondary" id="close-popup" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Include Bootstrap CSS and JavaScript -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/Content/Script/custom.js"></script>
+
+</body>
+</html>

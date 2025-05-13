@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TD_SampleDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="MappingTaskList">
+    <Key>
+      <PropertyRef Name="TaskID" />
+    </Key>
+    <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskName" Type="varchar" MaxLength="100" />
+    <Property Name="TaskStatus" Type="int" />
+    <Property Name="MappedListID" Type="int" />
+    <Property Name="MappedUserID" Type="int" />
+  </EntityType>
+  <EntityType Name="MASTERUSER">
+    <Key>
+      <PropertyRef Name="USERID" />
+    </Key>
+    <Property Name="USERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="100" />
+    <Property Name="LastName" Type="varchar" MaxLength="100" />
+    <Property Name="UPassword" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ToDoList">
+    <Key>
+      <PropertyRef Name="ToDoListID" />
+    </Key>
+    <Property Name="ToDoListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TDName" Type="varchar" MaxLength="100" />
+    <Property Name="MappedUserID" Type="int" />
+  </EntityType>
+  <Association Name="FK__MappingTa__Mappe__29572725">
+    <End Role="MASTERUSER" Type="Self.MASTERUSER" Multiplicity="0..1" />
+    <End Role="MappingTaskList" Type="Self.MappingTaskList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MASTERUSER">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="MappingTaskList">
+        <PropertyRef Name="MappedUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MappingTa__Mappe__2A4B4B5E">
+    <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="0..1" />
+    <End Role="MappingTaskList" Type="Self.MappingTaskList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ToDoList">
+        <PropertyRef Name="ToDoListID" />
+      </Principal>
+      <Dependent Role="MappingTaskList">
+        <PropertyRef Name="MappedListID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ToDoList__Mapped__267ABA7A">
+    <End Role="MASTERUSER" Type="Self.MASTERUSER" Multiplicity="0..1" />
+    <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MASTERUSER">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="ToDoList">
+        <PropertyRef Name="MappedUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_DeleteTASKAlongWithList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="taskid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_DeleteTASKLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TodolistID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertTASK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TaskName" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="int" Mode="In" />
+    <Parameter Name="mappedlistid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertTASKLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="tdName" Type="varchar" Mode="In" />
+    <Parameter Name="USERID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+    <Parameter Name="UPassword" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_MasterGetUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="UPassword" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_SelectTASKAlongWithList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="mappedlistid" Type="int" Mode="In" />
+    <Parameter Name="userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_SelectTASKLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MappedUserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_UpdateTASKAlongWithList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TaskName" Type="varchar" Mode="In" />
+    <Parameter Name="status" Type="int" Mode="In" />
+    <Parameter Name="Taskid" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="TD_SampleDBModelStoreContainer">
+    <EntitySet Name="MappingTaskList" EntityType="Self.MappingTaskList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MASTERUSER" EntityType="Self.MASTERUSER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__MappingTa__Mappe__29572725" Association="Self.FK__MappingTa__Mappe__29572725">
+      <End Role="MASTERUSER" EntitySet="MASTERUSER" />
+      <End Role="MappingTaskList" EntitySet="MappingTaskList" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MappingTa__Mappe__2A4B4B5E" Association="Self.FK__MappingTa__Mappe__2A4B4B5E">
+      <End Role="ToDoList" EntitySet="ToDoList" />
+      <End Role="MappingTaskList" EntitySet="MappingTaskList" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ToDoList__Mapped__267ABA7A" Association="Self.FK__ToDoList__Mapped__267ABA7A">
+      <End Role="MASTERUSER" EntitySet="MASTERUSER" />
+      <End Role="ToDoList" EntitySet="ToDoList" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

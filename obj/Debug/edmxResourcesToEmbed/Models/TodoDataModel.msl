@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TD_SampleDBModelStoreContainer" CdmEntityContainer="TD_SampleDBEntities">
+    <EntitySetMapping Name="MappingTaskLists">
+      <EntityTypeMapping TypeName="TD_SampleDBModel.MappingTaskList">
+        <MappingFragment StoreEntitySet="MappingTaskList">
+          <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+          <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+          <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+          <ScalarProperty Name="MappedListID" ColumnName="MappedListID" />
+          <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MASTERUSERs">
+      <EntityTypeMapping TypeName="TD_SampleDBModel.MASTERUSER">
+        <MappingFragment StoreEntitySet="MASTERUSER">
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="UPassword" ColumnName="UPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ToDoLists">
+      <EntityTypeMapping TypeName="TD_SampleDBModel.ToDoList">
+        <MappingFragment StoreEntitySet="ToDoList">
+          <ScalarProperty Name="ToDoListID" ColumnName="ToDoListID" />
+          <ScalarProperty Name="TDName" ColumnName="TDName" />
+          <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_DeleteTASKAlongWithList" FunctionName="TD_SampleDBModel.Store.sp_DeleteTASKAlongWithList" />
+    <FunctionImportMapping FunctionImportName="sp_DeleteTASKLIST" FunctionName="TD_SampleDBModel.Store.sp_DeleteTASKLIST" />
+    <FunctionImportMapping FunctionImportName="sp_InsertTASK" FunctionName="TD_SampleDBModel.Store.sp_InsertTASK" />
+    <FunctionImportMapping FunctionImportName="sp_InsertTASKLIST" FunctionName="TD_SampleDBModel.Store.sp_InsertTASKLIST" />
+    <FunctionImportMapping FunctionImportName="sp_InsertUser" FunctionName="TD_SampleDBModel.Store.sp_InsertUser" />
+    <FunctionImportMapping FunctionImportName="sp_MasterGetUser" FunctionName="TD_SampleDBModel.Store.sp_MasterGetUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TD_SampleDBModel.sp_MasterGetUser_Result">
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="UPassword" ColumnName="UPassword" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_SelectTASKAlongWithList" FunctionName="TD_SampleDBModel.Store.sp_SelectTASKAlongWithList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TD_SampleDBModel.sp_SelectTASKAlongWithList_Result">
+          <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+          <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+          <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+          <ScalarProperty Name="MappedListID" ColumnName="MappedListID" />
+          <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_SelectTASKLIST" FunctionName="TD_SampleDBModel.Store.sp_SelectTASKLIST">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TD_SampleDBModel.sp_SelectTASKLIST_Result">
+          <ScalarProperty Name="ToDoListID" ColumnName="ToDoListID" />
+          <ScalarProperty Name="TDName" ColumnName="TDName" />
+          <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_UpdateTASKAlongWithList" FunctionName="TD_SampleDBModel.Store.sp_UpdateTASKAlongWithList" />
+  </EntityContainerMapping>
+</Mapping>

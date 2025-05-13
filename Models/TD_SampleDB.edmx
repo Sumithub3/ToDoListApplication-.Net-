@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TD_SampleDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MappingTaskList">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskName" Type="varchar" MaxLength="100" />
+          <Property Name="TaskStatus" Type="int" />
+          <Property Name="MappedListID" Type="int" />
+          <Property Name="MappedUserID" Type="int" />
+        </EntityType>
+        <EntityType Name="MASTERUSER">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="100" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="UPassword" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ToDoList">
+          <Key>
+            <PropertyRef Name="ToDoListID" />
+          </Key>
+          <Property Name="ToDoListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TDName" Type="varchar" MaxLength="100" />
+          <Property Name="MappedUserID" Type="int" />
+        </EntityType>
+        <Association Name="FK__MappingTa__Mappe__29572725">
+          <End Role="MASTERUSER" Type="Self.MASTERUSER" Multiplicity="0..1" />
+          <End Role="MappingTaskList" Type="Self.MappingTaskList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERUSER">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="MappingTaskList">
+              <PropertyRef Name="MappedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MappingTa__Mappe__2A4B4B5E">
+          <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="0..1" />
+          <End Role="MappingTaskList" Type="Self.MappingTaskList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToDoList">
+              <PropertyRef Name="ToDoListID" />
+            </Principal>
+            <Dependent Role="MappingTaskList">
+              <PropertyRef Name="MappedListID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ToDoList__Mapped__267ABA7A">
+          <End Role="MASTERUSER" Type="Self.MASTERUSER" Multiplicity="0..1" />
+          <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERUSER">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="ToDoList">
+              <PropertyRef Name="MappedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_DeleteTASKAlongWithList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="taskid" Type="int" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_DeleteTASKLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TodolistID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertTASK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TaskName" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="int" Mode="In" />
+          <Parameter Name="mappedlistid" Type="int" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertTASKLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tdName" Type="varchar" Mode="In" />
+          <Parameter Name="USERID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="UPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_MasterGetUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="UPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_SelectTASKAlongWithList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="mappedlistid" Type="int" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_SelectTASKLIST" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MappedUserID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_UpdateTASKAlongWithList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TaskName" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="int" Mode="In" />
+          <Parameter Name="Taskid" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="TD_SampleDBModelStoreContainer">
+          <EntitySet Name="MappingTaskList" EntityType="Self.MappingTaskList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MASTERUSER" EntityType="Self.MASTERUSER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ToDoList" EntityType="Self.ToDoList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MappingTa__Mappe__29572725" Association="Self.FK__MappingTa__Mappe__29572725">
+            <End Role="MASTERUSER" EntitySet="MASTERUSER" />
+            <End Role="MappingTaskList" EntitySet="MappingTaskList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MappingTa__Mappe__2A4B4B5E" Association="Self.FK__MappingTa__Mappe__2A4B4B5E">
+            <End Role="ToDoList" EntitySet="ToDoList" />
+            <End Role="MappingTaskList" EntitySet="MappingTaskList" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ToDoList__Mapped__267ABA7A" Association="Self.FK__ToDoList__Mapped__267ABA7A">
+            <End Role="MASTERUSER" EntitySet="MASTERUSER" />
+            <End Role="ToDoList" EntitySet="ToDoList" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TD_SampleDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MappingTaskList">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TaskStatus" Type="Int32" />
+          <Property Name="MappedListID" Type="Int32" />
+          <Property Name="MappedUserID" Type="Int32" />
+          <NavigationProperty Name="MASTERUSER" Relationship="Self.FK__MappingTa__Mappe__29572725" FromRole="MappingTaskList" ToRole="MASTERUSER" />
+          <NavigationProperty Name="ToDoList" Relationship="Self.FK__MappingTa__Mappe__2A4B4B5E" FromRole="MappingTaskList" ToRole="ToDoList" />
+        </EntityType>
+        <EntityType Name="MASTERUSER">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MappingTaskLists" Relationship="Self.FK__MappingTa__Mappe__29572725" FromRole="MASTERUSER" ToRole="MappingTaskList" />
+          <NavigationProperty Name="ToDoLists" Relationship="Self.FK__ToDoList__Mapped__267ABA7A" FromRole="MASTERUSER" ToRole="ToDoList" />
+        </EntityType>
+        <EntityType Name="ToDoList">
+          <Key>
+            <PropertyRef Name="ToDoListID" />
+          </Key>
+          <Property Name="ToDoListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TDName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MappedUserID" Type="Int32" />
+          <NavigationProperty Name="MappingTaskLists" Relationship="Self.FK__MappingTa__Mappe__2A4B4B5E" FromRole="ToDoList" ToRole="MappingTaskList" />
+          <NavigationProperty Name="MASTERUSER" Relationship="Self.FK__ToDoList__Mapped__267ABA7A" FromRole="ToDoList" ToRole="MASTERUSER" />
+        </EntityType>
+        <Association Name="FK__MappingTa__Mappe__29572725">
+          <End Role="MASTERUSER" Type="Self.MASTERUSER" Multiplicity="0..1" />
+          <End Role="MappingTaskList" Type="Self.MappingTaskList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERUSER">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="MappingTaskList">
+              <PropertyRef Name="MappedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MappingTa__Mappe__2A4B4B5E">
+          <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="0..1" />
+          <End Role="MappingTaskList" Type="Self.MappingTaskList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ToDoList">
+              <PropertyRef Name="ToDoListID" />
+            </Principal>
+            <Dependent Role="MappingTaskList">
+              <PropertyRef Name="MappedListID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ToDoList__Mapped__267ABA7A">
+          <End Role="MASTERUSER" Type="Self.MASTERUSER" Multiplicity="0..1" />
+          <End Role="ToDoList" Type="Self.ToDoList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERUSER">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="ToDoList">
+              <PropertyRef Name="MappedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TD_SampleDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MappingTaskLists" EntityType="Self.MappingTaskList" />
+          <EntitySet Name="MASTERUSERs" EntityType="Self.MASTERUSER" />
+          <EntitySet Name="ToDoLists" EntityType="Self.ToDoList" />
+          <AssociationSet Name="FK__MappingTa__Mappe__29572725" Association="Self.FK__MappingTa__Mappe__29572725">
+            <End Role="MASTERUSER" EntitySet="MASTERUSERs" />
+            <End Role="MappingTaskList" EntitySet="MappingTaskLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MappingTa__Mappe__2A4B4B5E" Association="Self.FK__MappingTa__Mappe__2A4B4B5E">
+            <End Role="ToDoList" EntitySet="ToDoLists" />
+            <End Role="MappingTaskList" EntitySet="MappingTaskLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ToDoList__Mapped__267ABA7A" Association="Self.FK__ToDoList__Mapped__267ABA7A">
+            <End Role="MASTERUSER" EntitySet="MASTERUSERs" />
+            <End Role="ToDoList" EntitySet="ToDoLists" />
+          </AssociationSet>
+          <FunctionImport Name="sp_DeleteTASKAlongWithList">
+            <Parameter Name="taskid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_DeleteTASKLIST">
+            <Parameter Name="TodolistID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertTASK">
+            <Parameter Name="TaskName" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="Int32" />
+            <Parameter Name="mappedlistid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertTASKLIST">
+            <Parameter Name="tdName" Mode="In" Type="String" />
+            <Parameter Name="USERID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="UPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_MasterGetUser" ReturnType="Collection(TD_SampleDBModel.sp_MasterGetUser_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="UPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SelectTASKAlongWithList" ReturnType="Collection(TD_SampleDBModel.sp_SelectTASKAlongWithList_Result)">
+            <Parameter Name="mappedlistid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_SelectTASKLIST" ReturnType="Collection(TD_SampleDBModel.sp_SelectTASKLIST_Result)">
+            <Parameter Name="MappedUserID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateTASKAlongWithList">
+            <Parameter Name="TaskName" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="Int32" />
+            <Parameter Name="Taskid" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_MasterGetUser_Result">
+          <Property Type="Int32" Name="USERID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="UPassword" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_SelectTASKAlongWithList_Result">
+          <Property Type="Int32" Name="TaskID" Nullable="false" />
+          <Property Type="String" Name="TaskName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="TaskStatus" Nullable="true" />
+          <Property Type="Int32" Name="MappedListID" Nullable="true" />
+          <Property Type="Int32" Name="MappedUserID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_SelectTASKLIST_Result">
+          <Property Type="Int32" Name="ToDoListID" Nullable="false" />
+          <Property Type="String" Name="TDName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="MappedUserID" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TD_SampleDBModelStoreContainer" CdmEntityContainer="TD_SampleDBEntities">
+          <EntitySetMapping Name="MappingTaskLists">
+            <EntityTypeMapping TypeName="TD_SampleDBModel.MappingTaskList">
+              <MappingFragment StoreEntitySet="MappingTaskList">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="MappedListID" ColumnName="MappedListID" />
+                <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MASTERUSERs">
+            <EntityTypeMapping TypeName="TD_SampleDBModel.MASTERUSER">
+              <MappingFragment StoreEntitySet="MASTERUSER">
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UPassword" ColumnName="UPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ToDoLists">
+            <EntityTypeMapping TypeName="TD_SampleDBModel.ToDoList">
+              <MappingFragment StoreEntitySet="ToDoList">
+                <ScalarProperty Name="ToDoListID" ColumnName="ToDoListID" />
+                <ScalarProperty Name="TDName" ColumnName="TDName" />
+                <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_DeleteTASKAlongWithList" FunctionName="TD_SampleDBModel.Store.sp_DeleteTASKAlongWithList" />
+          <FunctionImportMapping FunctionImportName="sp_DeleteTASKLIST" FunctionName="TD_SampleDBModel.Store.sp_DeleteTASKLIST" />
+          <FunctionImportMapping FunctionImportName="sp_InsertTASK" FunctionName="TD_SampleDBModel.Store.sp_InsertTASK" />
+          <FunctionImportMapping FunctionImportName="sp_InsertTASKLIST" FunctionName="TD_SampleDBModel.Store.sp_InsertTASKLIST" />
+          <FunctionImportMapping FunctionImportName="sp_InsertUser" FunctionName="TD_SampleDBModel.Store.sp_InsertUser" />
+          <FunctionImportMapping FunctionImportName="sp_MasterGetUser" FunctionName="TD_SampleDBModel.Store.sp_MasterGetUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TD_SampleDBModel.sp_MasterGetUser_Result">
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UPassword" ColumnName="UPassword" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SelectTASKAlongWithList" FunctionName="TD_SampleDBModel.Store.sp_SelectTASKAlongWithList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TD_SampleDBModel.sp_SelectTASKAlongWithList_Result">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskStatus" ColumnName="TaskStatus" />
+                <ScalarProperty Name="MappedListID" ColumnName="MappedListID" />
+                <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_SelectTASKLIST" FunctionName="TD_SampleDBModel.Store.sp_SelectTASKLIST">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TD_SampleDBModel.sp_SelectTASKLIST_Result">
+                <ScalarProperty Name="ToDoListID" ColumnName="ToDoListID" />
+                <ScalarProperty Name="TDName" ColumnName="TDName" />
+                <ScalarProperty Name="MappedUserID" ColumnName="MappedUserID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_UpdateTASKAlongWithList" FunctionName="TD_SampleDBModel.Store.sp_UpdateTASKAlongWithList" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
